@@ -2,8 +2,6 @@ export default `
   type Class {
     id: Int!
     name: String!
-    createdAt: String!
-    updatedAt: String! 
     teachers: [Teacher!]!
     students: [Student!]!
     books: [Book!]!
@@ -11,28 +9,37 @@ export default `
   type Teacher {
     id: Int!
     name: String!
-    createdAt: String!
-    updatedAt: String! 
-    classes: [Class!]!
   }
   type Student {
     id: Int!
     name: String!
-    createdAt: String!
-    updatedAt: String! 
-    classes: [Class!]!
   }
   type Book {
     id: Int!
     name: String!
-    createdAt: String!
-    updatedAt: String! 
-    classes: [Class!]!
+  }
+  type ClassTeacher {
+    id: Int!
+    classId: Int!
+    teacher: [Teacher!]!
+  }
+  type ClassStudent {
+    id: Int!
+    classId: Int!
+    student: [Student!]!
+  }
+  type ClassBook {
+    id: Int!
+    classId: Int!
+    book: [Book!]!
   }
   type Query {
     allClasses: [Class!]!
     allTeachers: [Teacher!]!
     allStudents: [Student!]!
     allBooks: [Book!]!
+  }
+  type Mutation {
+    createTeacher(name: String!): Teacher!
   }
 `;

@@ -15,7 +15,20 @@ sequelize.authenticate()
     .catch(err => console.log('Unable to connect to the database:', err));
 
 const db = {
+    Class: sequelize.import('./class'),
+    Teacher: sequelize.import('./teacher'),
+    Student: sequelize.import('./student'),
+    Book: sequelize.import('./book'),
+    ClassTeacher: sequelize.import('./classTeacher'),
+    ClassStudent: sequelize.import('./classStudent'),
+    ClassBook: sequelize.import('./classBook'),
 };
+
+Object.keys(db).forEach((modelName) => {
+    if ('associate' in db[modelName]) {
+        db[modelName].associate(db);
+    }
+});
 
 db.sequelize = sequelize;
 
