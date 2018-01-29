@@ -3,5 +3,12 @@ export default (sequelize, DataTypes) => {
         name: DataTypes.STRING,
     });
 
+    Book.associate = (models) => {
+        // 1 to many class books
+        Book.hasMany(models.ClassBook, {
+            foreignKey: 'book_id',
+        });
+    };
+
     return Book;
 };

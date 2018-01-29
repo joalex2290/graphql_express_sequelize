@@ -4,17 +4,17 @@ export default (sequelize, DataTypes) => {
     });
 
     Class.associate = (models) => {
-        // 1 to many with teacher
+        // 1 to many teacher
         Class.hasMany(models.ClassTeacher, {
-            foreignKey: 'classId',
+            foreignKey: 'class_id',
         });
-        // 1 to many with student
+        // 1 to many student
         Class.hasMany(models.ClassStudent, {
-            foreignKey: 'classId',
+            foreignKey: 'class_id',
         });
-        // 1 to many with book
+        // 1 to many book
         Class.hasMany(models.ClassBook, {
-            foreignKey: 'classId',
+            foreignKey: 'class_id',
         });
     };
 
