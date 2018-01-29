@@ -5,18 +5,23 @@
   "main": "index.js",
   "scripts": {
     "start": "npm install && nodemon --exec babel-node index.js",
-    "run": "nodemon --exec babel-node index.js",
     "production": "npm install --production & node index.js"
   },
   "repository": "https://github.com/joalex2290/graphql_express_sequelize.git",
   "author": "John Munoz <john.munoz@microfocus.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.2"
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "graphql-server-express": "^1.3.2",
+    "graphql-tools": "^2.19.0",
+    "mysql2": "^1.5.1",
+    "sequelize": "^4.32.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "graphql": "^0.12.3",
     "nodemon": "^1.14.11"
   }
 }

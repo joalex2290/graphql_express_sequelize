@@ -1,12 +1,20 @@
 import express from 'express';
+import bodyParser from 'body-parser';
+import { graphiqlExpress, graphqlExpress } from 'graphql-server-express';
+import { makeExecutableSchema } from 'graphql-tools';
+
+import models from './models';
+
 const PORT = 3000;
 
 const app = express();
 
-app.get('/', function (req, res) {
-    res.send('Hello World!');
-});
+app.use(
+    '/graphiql',
+    graphiqlExpress({
+        endpointURL: '/graphql',
+    }),
+);
 
-app.listen(PORT, function () {
-    console.log('listening on port 3000!');
-});
+models.sequelize.sync()
+    .then(() => app.listen(PORT, () => console.log('listening on port 3000!')));
