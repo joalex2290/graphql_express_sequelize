@@ -21,17 +21,17 @@ export default `
   type ClassTeacher {
     id: Int!
     classId: Int!
-    teacher: [Teacher!]!
+    teacher: Teacher!
   }
   type ClassStudent {
     id: Int!
     classId: Int!
-    student: [Student!]!
+    student: Student!
   }
   type ClassBook {
     id: Int!
     classId: Int!
-    book: [Book!]!
+    book: Book!
   }
   type Query {
     allClasses: [Class!]!
@@ -40,6 +40,10 @@ export default `
     allBooks: [Book!]!
   }
   type Mutation {
+    createClass(name: String!): Class!
     createTeacher(name: String!): Teacher!
+    createStudent(name: String!): Student!
+    createBook(name: String!): Book!
+    addTeacherToClass(classId: Int!,teacherId: Int!): ClassTeacher!
   }
 `;

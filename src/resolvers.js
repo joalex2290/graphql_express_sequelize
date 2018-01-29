@@ -43,4 +43,17 @@ export default {
                 },
             }),
     },
+    Query: {
+        allClasses: (parent, args, { models }) => models.Class.findAll(),
+        allTeachers: (parent, args, { models }) => models.Teacher.findAll(),
+        allStudents: (parent, args, { models }) => models.Student.findAll(),
+        allBooks: (parent, args, { models }) => models.Book.findAll(),
+    },
+    Mutation: {
+        createClass: (parent, args, { models }) => models.Class.create(args),
+        createTeacher: (parent, args, { models }) => models.Teacher.create(args),
+        createStudent: (parent, args, { models }) => models.Student.create(args),
+        createBook: (parent, args, { models }) => models.Book.create(args),
+        addTeacherToClass: (parent, args, { models }) => models.ClassTeacher.create(args),
+    }
 };
