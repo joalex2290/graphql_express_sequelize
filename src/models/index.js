@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 
+// set up the connection to the database
 const sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -10,20 +11,15 @@ const sequelize = new Sequelize(
     },
 );
 
-sequelize.authenticate()
-    .then( err => console.log('Connection has been established successfully.'))
-    .catch(err => console.log('Unable to connect to the database:', err));
-
+// get all the models
 const db = {
-    Class: sequelize.import('./class'),
-    Teacher: sequelize.import('./teacher'),
-    Student: sequelize.import('./student'),
-    Book: sequelize.import('./book'),
-    ClassTeacher: sequelize.import('./classTeacher'),
-    ClassStudent: sequelize.import('./classStudent'),
-    ClassBook: sequelize.import('./classBook'),
+    Class: sequelize.import('./Class'),
+    Teacher: sequelize.import('./Teacher'),
+    Student: sequelize.import('./Student'),
+    Book: sequelize.import('./Book'),
 };
 
+// associate models if a relationship with another model exist
 Object.keys(db).forEach((modelName) => {
     if ('associate' in db[modelName]) {
         db[modelName].associate(db);

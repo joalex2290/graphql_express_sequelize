@@ -1,61 +1,27 @@
 export default {
     Class: {
         // get the teachers associated to the class
-        teachers: ({ id }, args, { models }) =>
-            models.ClassTeacher.findAll({
-                where: {
-                    class_id: id,
-                },
-            }),
+        teachers: ({ id }, args, { models, teacher }) =>
+            models.Class.find({
+                where: id
+            }).then(class_ => class_.getTeachers()),
         // get the students associated to the class
         students: ({ id }, args, { models }) =>
-            models.ClassStudent.findAll({
-                where: {
-                    class_id: id,
-                },
-            }),
+            models.Class.find({
+                where: id
+            }).then(class_ => class_.getStudents()),
         // get the books associated to the class
         books: ({ id }, args, { models }) =>
-            models.ClassBook.findAll({
-                where: {
-                    class_id: id,
-                },
-            }),
-    },
-    ClassTeacher: {
-        // get the teacher associated to the class
-        teacher: ({ teacher_id }, args, { models }) =>
-            models.Teacher.findOne({
-                where: {
-                    id: teacher_id,
-                },
-            }),
-    },
-    ClassStudent: {
-        // get the student associated to the class
-        student: ({ student_id }, args, { models }) =>
-            models.Student.findOne({
-                where: {
-                    id: student_id,
-                },
-            }),
-    },
-    ClassBook: {
-        // get the book associated to the class
-        book: ({ bookId }, args, { models }) =>
-            models.Book.findOne({
-                where: {
-                    id: book_id,
-                },
-            }),
+            models.Class.find({
+                where: id
+            }).then(class_ => class_.getBooks()),
     },
     Query: {
-        // list models from the db
+        // get all models from the db
         allClasses: (parent, args, { models }) => models.Class.findAll(),
         allTeachers: (parent, args, { models }) => models.Teacher.findAll(),
         allStudents: (parent, args, { models }) => models.Student.findAll(),
         allBooks: (parent, args, { models }) => models.Book.findAll(),
-        allClassTeacher: (parent, args, { models }) => models.ClassTeacher.findAll(),
     },
     Mutation: {
         // create models on the db
@@ -73,12 +39,31 @@ export default {
         deleteTeacher: (parent, args, { models }) => models.Teacher.destroy({ where: args }),
         deleteStudent: (parent, args, { models }) => models.Student.destroy({ where: args }),
         deleteBook: (parent, args, { models }) => models.Book.destroy({ where: args }),
-        // actions for pivot tables on the db
-        addTeacherToClass: (parent, args, { models }) => models.ClassTeacher.create(args),
-        addStudentToClass: (parent, args, { models }) => models.StudentTeacher.create(args),
-        addBookToClass: (parent, args, { models }) => models.ClassBook.create(args),
-        removeTeacherToClass: (parent, args, { models }) => models.ClassTeacher.destroy({ where: args }),
-        removeStudentToClass: (parent, args, { models }) => models.StudentTeacher.destroy({ where: args }),
-        removeBookToClass: (parent, args, { models }) => models.ClassBook.destroy({ where: args }),
+        // associate and remove teachers, students and books to classes
+        addTeacherToClass: (parent, args, { models }) => 
+            models.Class.find({
+                where: args.classId
+            }).then(class_ => class_.addTeacher(args.teacherId)),
+        addStudentToClass: (parent, args, { models }) => 
+            models.Class.find({
+                where: args.classId
+            }).then(class_ => class_.addStudent(args.studentId)),
+        addBookToClass: (parent, args, { models }) => 
+            models.Class.find({
+                where: args.classId
+            }).then(class_ => class_.addBook(args.bookId)),
+        removeTeacherFromClass: (parent, args, { models }) =>
+            models.Class.find({
+                where: args.classId
+            }).then(class_ => class_.removeTeachers(args.teacherId)),
+        removeStudentFromClass: (parent, args, { models }) =>
+            models.Class.find({
+                where: args.classId
+            }).then(class_ => class_.removeStudents(args.studentId)),
+        removeBookFromClass: (parent, args, { models }) =>
+            models.Class.find({
+                where: args.classId
+            }).then(class_ => class_.removeBooks(args.bookId)),
+
     }
 };
