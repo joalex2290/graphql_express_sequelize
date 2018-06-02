@@ -5,8 +5,8 @@ HOW TO INSTALL:
     - do the following steps:
         1. docker exec -it YOUR_CONTAINER mysql -u root -p
         2. Enter password:
-        3. ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '{your password}';
-        4. ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '{your password}';
+        3. ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
+        4. ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
         5. SELECT plugin FROM mysql.user WHERE User = 'root';
 
 
