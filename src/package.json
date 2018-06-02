@@ -4,7 +4,7 @@
   "description": "GraphQL API server using express and sequelize (mysql)",
   "main": "index.js",
   "scripts": {
-    "start": "npm install & nodemon --exec babel-node index.js",
+    "start": "npm install && nodemon --exec babel-node index.js",
     "production-start": "npm install --production & node index.js"
   },
   "repository": "https://github.com/joalex2290/graphql_express_sequelize.git",
