@@ -13,10 +13,10 @@ const sequelize = new Sequelize(
 
 // get all the models
 const db = {
-    Class: sequelize.import('./Class'),
-    Teacher: sequelize.import('./Teacher'),
-    Student: sequelize.import('./Student'),
-    Book: sequelize.import('./Book'),
+    Class: sequelize.import('./models/Class'),
+    Teacher: sequelize.import('./models/Teacher'),
+    Student: sequelize.import('./models/Student'),
+    Book: sequelize.import('./models/Book'),
 };
 
 // associate models if a relationship with another model exist

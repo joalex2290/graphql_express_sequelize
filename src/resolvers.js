@@ -1,69 +1,61 @@
 export default {
     Class: {
         // get the teachers associated to the class
-        teachers: ({ id }, args, { models, teacher }) =>
-            models.Class.find({
-                where: id
-            }).then(class_ => class_.getTeachers()),
+        teachers: ({ id }, args, { db, teacher }) => 
+                    db.Class.find({where: id})
+                    .then(response => response.getTeachers()),
         // get the students associated to the class
-        students: ({ id }, args, { models }) =>
-            models.Class.find({
-                where: id
-            }).then(class_ => class_.getStudents()),
+        students: ({ id }, args, { db }) => 
+                    db.Class.find({where: id})
+                    .then(response => response.getStudents()),
         // get the books associated to the class
-        books: ({ id }, args, { models }) =>
-            models.Class.find({
-                where: id
-            }).then(class_ => class_.getBooks()),
+        books: ({ id }, args, { db }) =>
+                    db.Class.find({where: id})
+                    .then(response => response.getBooks()),
     },
     Query: {
-        // get all models from the db
-        allClasses: (parent, args, { models }) => models.Class.findAll(),
-        allTeachers: (parent, args, { models }) => models.Teacher.findAll(),
-        allStudents: (parent, args, { models }) => models.Student.findAll(),
-        allBooks: (parent, args, { models }) => models.Book.findAll(),
+        // get all db from the db
+        classes: (parent, args, { db }) => db.Class.findAll(),
+        teachers: (parent, args, { db }) => db.Teacher.findAll(),
+        students: (parent, args, { db }) => db.Student.findAll(),
+        books: (parent, args, { db }) => db.Book.findAll(),
+        book: (parent, { id }, { db }) => db.Book.find({where: id }),
     },
     Mutation: {
-        // create models on the db
-        createClass: (parent, args, { models }) => models.Class.create(args),
-        createTeacher: (parent, args, { models }) => models.Teacher.create(args),
-        createStudent: (parent, args, { models }) => models.Student.create(args),
-        createBook: (parent, args, { models }) => models.Book.create(args),
-        // update models on the db
-        updateClass: (parent, { id, newName }, { models }) => models.Class.update({ name: newName }, { where: { id } }),
-        updateTeacher: (parent, { id, newName }, { models }) => models.Teacher.update({ name: newName }, { where: { id } }),
-        updateStudent: (parent, { id, newName }, { models }) => models.Student.update({ name: newName }, { where: { id } }),
-        updateBook: (parent, { id, newName }, { models }) => models.Book.update({ name: newName }, { where: { id } }),
-        // delete models on the db
-        deleteClass: (parent, args, { models }) => models.Class.destroy({ where: args }),
-        deleteTeacher: (parent, args, { models }) => models.Teacher.destroy({ where: args }),
-        deleteStudent: (parent, args, { models }) => models.Student.destroy({ where: args }),
-        deleteBook: (parent, args, { models }) => models.Book.destroy({ where: args }),
+        // create db on the db
+        createClass: (parent, args, { db }) => db.Class.create(args),
+        createTeacher: (parent, args, { db }) => db.Teacher.create(args),
+        createStudent: (parent, args, { db }) => db.Student.create(args),
+        createBook: (parent, args, { db }) => db.Book.create(args),
+        // update db on the db
+        updateClass: (parent, { id, name }, { db }) => db.Class.update({ name: name }, { where: { id } }),
+        updateTeacher: (parent, { id, name }, { db }) => db.Teacher.update({ name: name }, { where: { id } }),
+        updateStudent: (parent, { id, name }, { db }) => db.Student.update({ name: name }, { where: { id } }),
+        updateBook: (parent, { id, name }, { db }) => db.Book.update({ name: name }, { where: { id } }),
+        // delete db on the db
+        deleteClass: (parent, args, { db }) => db.Class.destroy({ where: args }),
+        deleteTeacher: (parent, args, { db }) => db.Teacher.destroy({ where: args }),
+        deleteStudent: (parent, args, { db }) => db.Student.destroy({ where: args }),
+        deleteBook: (parent, args, { db }) => db.Book.destroy({ where: args }),
         // associate and remove teachers, students and books to classes
-        addTeacherToClass: (parent, args, { models }) => 
-            models.Class.find({
-                where: args.classId
-            }).then(class_ => class_.addTeacher(args.teacherId)),
-        addStudentToClass: (parent, args, { models }) => 
-            models.Class.find({
-                where: args.classId
-            }).then(class_ => class_.addStudent(args.studentId)),
-        addBookToClass: (parent, args, { models }) => 
-            models.Class.find({
-                where: args.classId
-            }).then(class_ => class_.addBook(args.bookId)),
-        removeTeacherFromClass: (parent, args, { models }) =>
-            models.Class.find({
-                where: args.classId
-            }).then(class_ => class_.removeTeachers(args.teacherId)),
-        removeStudentFromClass: (parent, args, { models }) =>
-            models.Class.find({
-                where: args.classId
-            }).then(class_ => class_.removeStudents(args.studentId)),
-        removeBookFromClass: (parent, args, { models }) =>
-            models.Class.find({
-                where: args.classId
-            }).then(class_ => class_.removeBooks(args.bookId)),
+        addTeacherToClass: (parent, { classId, teacherId } , { db }) => 
+            db.Class.find({where: classId})
+            .then(response => response.addTeacher(teacherId)),
+        addStudentToClass: (parent, { classId, studentId }, { db }) => 
+            db.Class.find({ where: classId})
+            .then(response => response.addStudent(studentId)),
+        addBookToClass: (parent, { classId, bookId }, { db }) => 
+            db.Class.find({ where: classId})
+            .then(response => response.addBook(bookId)),
+        removeTeacherFromClass: (parent, { classId, teacherId }, { db }) => 
+            db.Class.find({ where: classId})
+            .then(response => response.removeTeachers(teacherId)),
+        removeStudentFromClass: (parent, { classId, studentId }, { db }) =>
+            db.Class.find({where: classId})
+            .then(response => response.removeStudents(studentId)),
+        removeBookFromClass: (parent, { classId, bookId }, { db }) =>
+            db.Class.find({where: classId})
+            .then(response => response.removeBooks(bookId)),
 
     }
 };

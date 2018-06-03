@@ -5,9 +5,7 @@ HOW TO INSTALL:
     - do the following steps:
         1. docker exec -it YOUR_CONTAINER mysql -u root -p
         2. Enter password:
-        3. ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
-        4. ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
-        5. SELECT plugin FROM mysql.user WHERE User = 'root';
+        3. ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root'; ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';SELECT plugin FROM mysql.user WHERE User = 'root';
 
 
 Database schema:
@@ -157,10 +155,10 @@ Challenges:
     - creating the resolvers because the n to m relatioships
 
 URLs:
-    - allClasses: get all classes with associated teachers, students and books - http://localhost:3000/graphql?query={allClasses{id%20name%20teachers{id%20name}%20students{id%20name}%20books{id%20name}}}
-    - allTeachers: get all teachers - http://localhost:3000/graphql?query={allTeachers{id%20name}}
-    - allStudents: get all students - http://localhost:3000/graphql?query={allStudents{id%20name}}
-    - allBooks: get all books - http://localhost:3000/graphql?query={allBooks{id%20name}}
+    - classes: get all classes with associated teachers, students and books - http://localhost:3000/graphql?query={allClasses{id%20name%20teachers{id%20name}%20students{id%20name}%20books{id%20name}}}
+    - teachers: get all teachers - http://localhost:3000/graphql?query={allTeachers{id%20name}}
+    - students: get all students - http://localhost:3000/graphql?query={allStudents{id%20name}}
+    - books: get all books - http://localhost:3000/graphql?query={allBooks{id%20name}}
     - createTeacher(name): create a new teacher, just name as a parameter - http://localhost:3000/graphiql?query=mutation{createTeacher(name:"test")}
     - createStudent(name): create a new student, just name as a parameter - http://localhost:3000/graphiql?query=mutation{createStudent(name:"test")}
     - createBook(name): create a new book, just name as a parameter - http://localhost:3000/graphiql?query=mutation{createBook(name:"test")}
