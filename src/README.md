@@ -1,6 +1,7 @@
 GraphQL API server using express and sequelize (mysql)
 
 HOW TO INSTALL:
+    - copy content from .env.example to .env
     - add mysql container ID to DB_HOST variable in env file
     - do the following steps:
         1. docker exec -it YOUR_CONTAINER mysql -u root -p
