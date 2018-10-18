@@ -1,25 +1,33 @@
-// import basic modules to run the api server
+// import libraries to run the api server
 import { } from 'dotenv/config';
 import express from 'express';
 import bodyParser from 'body-parser';
+// import models and db connection (SEQUELIZE)
+import db from './db';
+
+// import libraries to use (GRAPHQL)
 import { graphiqlExpress, graphqlExpress } from 'graphql-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
-
-// import models, db connection using sequelize, schema and resolvers
-import db from './db';
+// import type definitions and resolvers (GRAPHQL)
 import typeDefs from './typeDefs';
 import resolvers from './resolvers';
+// create the schema using graphql-tools (GRAPHQL)
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 const PORT = 3000;
-// create the schema using graphql-tools
-const schema = makeExecutableSchema({typeDefs,resolvers});
 const app = express();
 
-// Url for graphiql
-app.use('/graphiql',graphiqlExpress({endpointURL: '/api/v1',}));
+// RESTFUL API 
+app.get('/api/v1/classes', (req, res) => db.Class.findAll()
+    .then((classes) => res.status(200).send(classes))
+    .catch((error) => res.status(400).send(error))
+);
 
-// Url to use the API
-app.use('/api/v1',bodyParser.json(),graphqlExpress({ schema, context: { db } }));
+// GRAPHQL API
+app.use('/api/v2',bodyParser.json(),graphqlExpress({ schema, context: { db } }));
 
-// start the server and create the db schema
+// graphiql URL that will use the API URL endpoint
+app.use('/graphiql', graphiqlExpress({ endpointURL: '/api/v2', }));
+
+// run db connection and the application
 db.sequelize.sync().then(() => app.listen(PORT, () => console.log('listening on port 3000!')));

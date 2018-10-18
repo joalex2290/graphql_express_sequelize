@@ -27,8 +27,10 @@ export default `
     students: [Student]
     books: [Book]
     book(id: Int): Book
+    createClass2(name: String): Class
   }
   type Mutation {
+    classes2: [Class]
     createClass(name: String): Class
     createTeacher(name: String): Teacher
     createStudent(name: String): Student
